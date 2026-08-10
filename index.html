@@ -3,75 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍽️ Canteen Menu</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>4 Nữ Xung Kích - Theo dõi Thực đơn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <!-- Main Dashboard -->
-    <div id="main-screen" class="screen active">
-        <header>
-            <div class="header-content">
-                <h1>🍽️ Canteen Menu</h1>
-                <p class="current-date" id="current-date"></p>
-            </div>
-            <button class="add-btn" id="add-btn" title="Thêm thực đơn">+</button>
-        </header>
-        <div class="user-list" id="user-list">
-            <p class="loading">Đang tải dữ liệu</p>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <i class="fas fa-utensils header-icon"></i>
+            <h1 class="header-title">4 Nữ Xung Kích</h1>
         </div>
-    </div>
+        <button class="add-btn" onclick="openModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </header>
 
-    <!-- User Detail Screen -->
-    <div id="detail-screen" class="screen">
-        <header>
-            <button class="back-btn" id="back-btn" title="Quay lại">←</button>
-            <div class="header-content">
-                <h1 id="detail-name"></h1>
-                <p id="detail-id"></p>
-            </div>
-        </header>
-        <div class="date-selector">
-            <input type="date" id="date-picker" />
+    <!-- Main Content -->
+    <main>
+        <div class="page-header">
+            <h2 class="page-title">Theo dõi Thực đơn</h2>
+            <p class="page-subtitle" id="currentDate">Hôm nay, 20-05-2024</p>
         </div>
-        <div class="menu-display">
-            <div class="meal-item">
-                <span class="meal-icon">☀️</span>
-                <div class="meal-content">
-                    <h3>Món Sáng</h3>
-                    <p id="sang-meal">Chưa có dữ liệu</p>
-                </div>
-            </div>
-            <div class="meal-item">
-                <span class="meal-icon">🍲</span>
-                <div class="meal-content">
-                    <h3>Món Trưa</h3>
-                    <p id="trua-meal">Chưa có dữ liệu</p>
-                </div>
-            </div>
-            <div class="meal-item">
-                <span class="meal-icon">🧃</span>
-                <div class="meal-content">
-                    <h3>Món Xế</h3>
-                    <p id="xe-meal">Chưa có dữ liệu</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Import JSON -->
-    <div id="modal" class="modal">
+        <!-- Employee Grid -->
+        <div class="employee-grid" id="employeeGrid">
+            <p class="loading">Đang tải dữ liệu...</p>
+        </div>
+    </main>
+
+    <!-- JSON Modal -->
+    <div class="modal" id="jsonModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📝 Thêm Thực Đơn</h2>
-                <button class="close-btn" id="close-modal">&times;</button>
+                <h2 class="modal-title">📝 Nhập dữ liệu JSON</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <textarea id="json-input" placeholder='Dán dữ liệu JSON tại đây...
-
-Ví dụ:
-{
+            <div class="modal-body">
+                <p class="modal-description">Dán chuỗi JSON chứa thông tin nhân viên và thực đơn vào ô bên dưới để cập nhật nhanh.</p>
+                <textarea class="json-input" placeholder='{
   "id": "26005656",
   "name": "NGUYỄN VĂN A",
   "menu": {
@@ -82,13 +57,14 @@ Ví dụ:
     }
   }
 }'></textarea>
-            <div class="modal-actions">
-                <button class="save-btn" id="save-btn">💾 Lưu & Cập nhật</button>
             </div>
-            <p class="modal-message" id="modal-message"></p>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+                <button class="btn btn-primary" onclick="handleJSONSubmit()">Xác nhận</button>
+            </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
