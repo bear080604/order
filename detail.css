@@ -1,0 +1,314 @@
+/* Reset & Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #006c49;
+    --primary-container: #10b981;
+    --on-primary: #ffffff;
+    --surface: #f8f9ff;
+    --surface-container: #e5eeff;
+    --outline: #6c7a71;
+    --outline-variant: #bbcabf;
+    --on-background: #0b1c30;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8fafc;
+    color: var(--on-background);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 64px;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    z-index: 50;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.back-btn:active {
+    background: var(--surface-container);
+}
+
+.header-info {
+    flex: 1;
+}
+
+.header-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--on-background);
+}
+
+.header-id {
+    font-size: 14px;
+    color: var(--outline);
+}
+
+/* Main Content */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+/* Employee Info Card */
+.employee-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.employee-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary-container);
+    color: var(--on-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.employee-details {
+    flex: 1;
+}
+
+.employee-name {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.employee-id {
+    font-size: 16px;
+    color: var(--outline);
+}
+
+/* Date Selector Card */
+.date-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.date-label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.date-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--outline-variant);
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9fafb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 108, 73, 0.1);
+}
+
+/* Menu Display */
+.menu-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.meal-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.meal-card:active {
+    transform: scale(0.98);
+}
+
+.meal-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.meal-icon-wrapper.breakfast {
+    background: #e0f2fe;
+}
+
+.meal-icon-wrapper.lunch {
+    background: #dcfce7;
+}
+
+.meal-icon-wrapper.snack {
+    background: #ffedd5;
+}
+
+.meal-icon {
+    font-size: 28px;
+}
+
+.meal-icon.breakfast {
+    color: #0284c7;
+}
+
+.meal-icon.lunch {
+    color: #16a34a;
+}
+
+.meal-icon.snack {
+    color: #ea580c;
+}
+
+.meal-content {
+    flex: 1;
+}
+
+.meal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.meal-description {
+    font-size: 16px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* Loading & Empty */
+.loading, .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--outline);
+    font-size: 16px;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 80px;
+    right: 16px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 200;
+    font-size: 14px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toast.success {
+    background: var(--primary-container);
+    color: var(--on-primary);
+}
+
+.toast.error {
+    background: #fecaca;
+    color: #991b1b;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    body {
+        padding-top: 0;
+    }
+
+    header {
+        position: static;
+    }
+
+    main {
+        padding: 40px 24px;
+    }
+
+    .employee-name {
+        font-size: 32px;
+    }
+
+    .meal-card:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        transform: translateX(8px);
+    }
+}
+
+/* Font Awesome Icons */
+i {
+    display: inline-block;
+}
+
+.meal-icon {
+    font-size: 28px;
+}
