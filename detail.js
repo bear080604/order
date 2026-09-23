@@ -24,6 +24,7 @@ async function loadEmployeeDetail() {
     if (!employeeId) {
         showNotification('Không tìm thấy ID nhân viên', 'error');
         setTimeout(() => window.location.href = 'index2.html', 2000);
+        setTimeout(() => window.location.href = 'index.html', 2000);
         return;
     }
     
@@ -62,7 +63,13 @@ function renderEmployeeInfo() {
                 <div class="avatar">${initials}</div>
                 <div class="employee-details">
                     <h2 class="employee-name">${currentEmployee.name}</h2>
-                    <p class="employee-id">Mã NV: ${currentEmployee.id}</p>
+                    <div class="employee-id-row">
+                        <p class="employee-id">Mã NV: ${currentEmployee.id}</p>
+                        <button class="barcode-btn" onclick="window.location.href='barcode.html?id=${currentEmployee.id}&name=${encodeURIComponent(currentEmployee.name)}'">
+                            <i class="fas fa-barcode"></i>
+                            Barcode
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

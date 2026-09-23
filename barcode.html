@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Barcode - Nhân viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- JsBarcode: thư viện tạo barcode Code128 chuẩn quét máy scan -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="barcode.css">
+</head>
+<body>
+
+    <!-- Thanh điều khiển nhỏ gọn ở trên -->
+    <div class="top-bar">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <span class="top-title">Mã Barcode Nhân Viên</span>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Toàn màn hình">
+            <i class="fas fa-expand" id="fullscreenIcon"></i>
+        </button>
+    </div>
+
+    <!-- Nút thoát landscape — chỉ hiện khi đang ở landscape mode -->
+    <button class="exit-landscape-btn" onclick="toggleFullscreen()">
+        <i class="fas fa-compress"></i>
+        Thoát
+    </button>
+
+    <!-- Khu vực quét barcode -->
+    <div class="scan-area">
+        <div class="scan-card">
+
+            <!-- Barcode SVG — Code128 -->
+            <div class="barcode-wrapper">
+                <svg id="barcode"></svg>
+            </div>
+
+            <!-- Thông tin nhân viên + hint -->
+            <div class="scan-card-info">
+                <p class="emp-name" id="empName">Đang tải...</p>
+                <p class="emp-id" id="empId">--</p>
+                <p class="scan-hint">
+                    <i class="fas fa-barcode"></i>
+                    Hướng máy quét vào vạch đen
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="barcode.js"></script>
+</body>
+</html>
