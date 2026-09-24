@@ -1,13 +1,11 @@
-// Lấy thông tin từ URL query params
 const params = new URLSearchParams(window.location.search);
 const employeeId = params.get('id');
 const employeeName = params.get('name') ? decodeURIComponent(params.get('name')) : '';
 
-// Render thông tin nhân viên
 document.getElementById('empName').textContent = employeeName || 'Nhân viên';
 document.getElementById('empId').textContent = employeeId || '--';
 
-// Tạo Barcode
+// Barcode portrait
 if (employeeId) {
     JsBarcode('#barcode', employeeId, {
         format: 'CODE128',
@@ -16,68 +14,53 @@ if (employeeId) {
         displayValue: false,
         background: '#ffffff',
         lineColor: '#000000',
-        margin: 12,
-        valid: function(valid) {
-            if (!valid) document.getElementById('barcode').style.display = 'none';
-        }
+        margin: 12
     });
 } else {
     document.getElementById('empName').textContent = 'Không tìm thấy mã nhân viên';
-    document.getElementById('empId').textContent = '--';
 }
 
-// Chỉ iOS Safari mới cần CSS transform fallback
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-}
+// ============================================================
+// Landscape overlay toggle
+// ============================================================
+let isLandscape = false;
 
-let isLandscapeMode = false;
+function toggleLandscape() {
+    isLandscape = !isLandscape;
+    const overlay = document.getElementById('landscapeOverlay');
+    const icon    = document.getElementById('fullscreenIcon');
 
-async function toggleFullscreen() {
-    const icon = document.getElementById('fullscreenIcon');
-    isLandscapeMode = !isLandscapeMode;
-
-    if (isLandscapeMode) {
+    if (isLandscape) {
+        overlay.classList.add('active');
         icon.className = 'fas fa-compress';
-        document.body.classList.add('landscape-mode');
 
-        if (isIOS()) {
-            // iOS: dùng CSS transform xoay body vì không có orientation lock
-            applyIOSLandscape(true);
-        } else {
-            // Android hoặc PC DevTools: thử orientation lock (sẽ pass trên Android, fail im lặng trên PC)
-            try { await screen.orientation.lock('landscape'); } catch (e) {}
+        const svgL = document.getElementById('barcodeL');
+        if (employeeId && !svgL.getAttribute('data-rendered')) {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            // landscape-inner: 90vh × 90vw, padding 16px mỗi bên
+            const innerW = vh * 0.9 - 32;
+            const innerH = vw * 0.9 - 32;
+            JsBarcode('#barcodeL', employeeId, {
+                format: 'CODE128',
+                width: Math.max(2, Math.round(innerW / 55)),
+                height: Math.round(innerH),
+                displayValue: false,
+                background: '#ffffff',
+                lineColor: '#000000',
+                margin: 6
+            });
+            // preserveAspectRatio none → SVG stretch fill toàn bộ container
+            svgL.setAttribute('preserveAspectRatio', 'none');
+            svgL.setAttribute('data-rendered', '1');
         }
 
+        // Mobile: thử lock landscape
+        try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) {}
+
     } else {
+        overlay.classList.remove('active');
         icon.className = 'fas fa-expand';
-        document.body.classList.remove('landscape-mode');
-
-        if (isIOS()) {
-            applyIOSLandscape(false);
-        } else {
-            try { screen.orientation.unlock(); } catch (e) {}
-        }
-    }
-}
-
-// iOS Safari fallback: xoay body bằng CSS transform
-function applyIOSLandscape(active) {
-    if (active) {
-        const w = window.innerHeight; // portrait height → landscape width
-        const h = window.innerWidth;  // portrait width  → landscape height
-        document.body.style.cssText = `
-            transform: rotate(90deg);
-            transform-origin: top left;
-            width: ${w}px;
-            height: ${h}px;
-            position: fixed;
-            top: 0;
-            left: ${h}px;
-            overflow: hidden;
-            background: #ffffff;
-        `;
-    } else {
-        document.body.style.cssText = '';
+        try { screen.orientation.unlock(); } catch (e) {}
     }
 }

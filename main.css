@@ -88,7 +88,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 28px;
+    /* Fluid padding: 12px trên mobile nhỏ → 24px trên desktop */
+    padding: clamp(10px, 2vw, 20px) clamp(14px, 4vw, 32px);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
     transition: all 0.3s var(--ease-smooth);
 }
@@ -118,7 +119,8 @@ header {
 }
 
 .header-title {
-    font-size: 21px;
+    /* Fluid font: 16px mobile nhỏ → 22px desktop */
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: 800;
     letter-spacing: -0.025em;
     background: linear-gradient(135deg, #1e293b 0%, #065f46 100%);
@@ -157,7 +159,8 @@ header {
 main {
     max-width: 1360px;
     margin: 0 auto;
-    padding: 36px 28px 70px;
+    /* Fluid padding: compact trên mobile, rộng hơn trên desktop */
+    padding: clamp(16px, 4vw, 42px) clamp(14px, 4vw, 32px) clamp(60px, 8vw, 90px);
 }
 
 /* --- Page Header Section --- */
@@ -165,11 +168,12 @@ main {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4vw, 32px);
 }
 
 .page-title {
-    font-size: 30px;
+    /* Fluid: 20px mobile nhỏ → 34px desktop */
+    font-size: clamp(20px, 5vw, 34px);
     font-weight: 800;
     letter-spacing: -0.035em;
     color: var(--text-heading);
@@ -202,11 +206,20 @@ main {
     font-size: 14px;
 }
 
-/* --- Employee Grid --- */
+/* --- Employee Grid — Fluid, tự chia cột theo màn hình --- */
 .employee-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+    /*
+        auto-fill: tự tính số cột
+        minmax(260px, 1fr): mỗi cột tối thiểu 260px, tối đa co giãn đều
+        → mobile nhỏ (320px): 1 cột
+        → tablet (540px): 2 cột
+        → desktop (800px+): 3 cột
+        → wide (1100px+): 4 cột
+        Không cần viết breakpoint nào cả!
+    */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: clamp(14px, 2.5vw, 26px);
 }
 
 /* --- Employee Card (Thiet ke bong benh, trang sang, hoan toan khong co mau den) --- */
@@ -680,30 +693,18 @@ main {
     }
 }
 
-/* --- Responsive Media Queries --- */
-@media (min-width: 640px) {
-    .employee-grid {
-        grid-template-columns: repeat(2, 1fr);
+
+/* --- Modal responsive: đảm bảo không tràn màn hình nhỏ --- */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 10px;
+        border-radius: 18px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .employee-card {
+        padding: clamp(12px, 3vw, 22px);
     }
 }
 
-@media (min-width: 1024px) {
-    main {
-        padding: 42px 32px 90px;
-    }
-
-    .page-title {
-        font-size: 34px;
-    }
-
-    .employee-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 26px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .employee-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}

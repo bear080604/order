@@ -8,39 +8,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- JsBarcode: thư viện tạo barcode Code128 chuẩn quét máy scan -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
     <link rel="stylesheet" href="barcode.css">
 </head>
 <body>
 
-    <!-- Thanh điều khiển nhỏ gọn ở trên -->
+    <!-- Thanh điều khiển -->
     <div class="top-bar">
         <button class="back-btn" onclick="window.history.back()">
             <i class="fas fa-arrow-left"></i>
         </button>
         <span class="top-title">Mã Barcode Nhân Viên</span>
-        <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Toàn màn hình">
+        <button class="fullscreen-btn" onclick="toggleLandscape()" title="Xoay ngang">
             <i class="fas fa-expand" id="fullscreenIcon"></i>
         </button>
     </div>
 
-    <!-- Nút thoát landscape — chỉ hiện khi đang ở landscape mode -->
-    <button class="exit-landscape-btn" onclick="toggleFullscreen()">
-        <i class="fas fa-compress"></i>
-        Thoát
-    </button>
-
-    <!-- Khu vực quét barcode -->
+    <!-- Trang bình thường: portrait -->
     <div class="scan-area">
         <div class="scan-card">
-
-            <!-- Barcode SVG — Code128 -->
             <div class="barcode-wrapper">
                 <svg id="barcode"></svg>
             </div>
-
-            <!-- Thông tin nhân viên + hint -->
             <div class="scan-card-info">
                 <p class="emp-name" id="empName">Đang tải...</p>
                 <p class="emp-id" id="empId">--</p>
@@ -49,8 +38,27 @@
                     Hướng máy quét vào vạch đen
                 </p>
             </div>
-
         </div>
+    </div>
+
+    <!--
+        Landscape overlay — hiển thị khi bấm nút xoay ngang
+        Cách hoạt động:
+        - overlay: fixed, phủ 100vw × 100vh, nền trắng
+        - .landscape-inner: div con có kích thước 100vh × 100vw (đảo ngược)
+          + được căn giữa bằng margin âm
+          + xoay 90° CW quanh tâm
+          → kết quả: div con tràn đầy màn hình theo chiều NGANG
+        - Barcode SVG bên trong render theo chiều ngang của div con
+          → sau khi div xoay, barcode xuất hiện đúng chiều landscape
+    -->
+    <div class="landscape-overlay" id="landscapeOverlay">
+        <div class="landscape-inner">
+            <svg id="barcodeL"></svg>
+        </div>
+        <button class="exit-landscape-btn" onclick="toggleLandscape()">
+            <i class="fas fa-compress"></i>
+        </button>
     </div>
 
     <script src="barcode.js"></script>
